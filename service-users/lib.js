@@ -21,6 +21,8 @@ const saveAccounts = async (newAccounts = []) => {
 const hasAccount = email => accounts.some(account => account.email === email);
 const findAccount = email => accounts.find(account => account.email === email);
 const findAllAccounts = () => accounts;
+const verifyPassword = (user, password) =>
+  bcrypt.compareSync(password, user.password);
 
 const addAccount = async ({ email, name, password }) => {
   if (hasAccount(email)) {
@@ -37,4 +39,10 @@ const addAccount = async ({ email, name, password }) => {
   return user;
 };
 
-module.exports = { hasAccount, findAccount, findAllAccounts, addAccount };
+module.exports = {
+  hasAccount,
+  findAccount,
+  findAllAccounts,
+  addAccount,
+  verifyPassword
+};
