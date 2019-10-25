@@ -19,7 +19,9 @@ const saveAccounts = async (newAccounts = []) => {
 };
 
 const hasAccount = email => accounts.some(account => account.email === email);
-const getAccount = email => accounts.find(account => account.email === email);
+const findAccount = email => accounts.find(account => account.email === email);
+const findAllAccounts = () => accounts;
+
 const addAccount = async ({ email, name, password }) => {
   if (hasAccount(email)) {
     throw new Error(`Account already exists for ${email}`);
@@ -35,4 +37,4 @@ const addAccount = async ({ email, name, password }) => {
   return user;
 };
 
-module.exports = { hasAccount, getAccount, addAccount };
+module.exports = { hasAccount, findAccount, findAllAccounts, addAccount };
