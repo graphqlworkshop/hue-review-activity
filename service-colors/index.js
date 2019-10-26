@@ -10,6 +10,12 @@ const typeDefs = gql`
     title: String!
     value: String!
     created: DateTime!
+    createdBy: User! @provides(fields: "name")
+  }
+
+  extend type User @key(fields: "email") {
+    email: ID! @external
+    name: String! @external
   }
 
   type Query {
