@@ -15,6 +15,7 @@ const typeDefs = gql`
 
   extend type User @key(fields: "email") {
     email: ID! @external
+    postedColors: [Color!]!
   }
 
   type Query {
@@ -27,6 +28,9 @@ const resolvers = {
   Query: {
     totalColors: (_, __, { countColors }) => countColors(),
     allColors: (_, __, { findColors }) => findColors()
+  },
+  User: {
+    postedColors: ({ email }, _, { findColors }) => findColors(email)
   }
 };
 
