@@ -1,17 +1,12 @@
 const { ApolloServer, gql } = require("apollo-server");
 const { buildFederatedSchema } = require("@apollo/federation");
-const {
-  addReview,
-  findAllItemReviews,
-  countReviews,
-  findReviews,
-  findReviewById
-} = require("./lib");
+const { countReviews, findReviews } = require("./lib");
 
 const typeDefs = gql`
-  type Review @key(fields: "id") {
+  type Review {
     id: ID!
   }
+
   type Query {
     totalReviews: Int!
     allReviews: [Review!]!
