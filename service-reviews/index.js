@@ -1,6 +1,17 @@
 const { ApolloServer, gql } = require("apollo-server");
-const { countReviews, findReviews } = require("./lib");
+const { buildFederatedSchema } = require("@apollo/federation");
+const {
+  addReview,
+  findAllItemReviews,
+  countReviews,
+  findReviews,
+  findReviewById
+} = require("./lib");
+
 const typeDefs = gql`
+  type Review @key(fields: "id") {
+    id: ID!
+  }
   type Query {
     totalReviews: Int!
     allReviews: [Review!]!
@@ -9,24 +20,31 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    totalReviews: (_, __, { countReviews }) => countReviews(),
-    allReviews: (_, __, { findReviews }) => findReviews()
+    totalReviews: (_, __, { countReviews, appID }) => countReviews(appID),
+    allReviews: (_, __, { findReviews, appID }) => findReviews(appID)
   }
 };
 
 const start = async () => {
   const server = new ApolloServer({
-    typeDefs,
-    resolvers,
+    schema: buildFederatedSchema([
+      {
+        resolvers,
+        typeDefs
+      }
+    ]),
     context({ req }) {
       return {
         countReviews,
-        findReviews
+        findReviews,
+        addReview,
+        findAllItemReviews,
+        findReviewById
       };
     }
   });
   server.listen(process.env.PORT).then(({ url }) => {
-    console.log(` ⭐️ ⭐️ ⭐️ ⭐️ ⭐️  - Review service running at: ${url}`);
+    console.log(`     👨‍👨‍👧‍👦   - Account service running at: ${url}`);
   });
 };
 

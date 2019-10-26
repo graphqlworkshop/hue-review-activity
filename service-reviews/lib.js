@@ -38,7 +38,7 @@ const findUserReview = (appID, currentUser, itemID) =>
   );
 
 const findAllItemReviews = (itemID, appID) => {
-  const itemReviews = reviews.find(
+  const itemReviews = reviews.filter(
     r => r.itemID === itemID && r.appID === appID
   );
   const ratings = itemReviews.map(r => r.rating);
@@ -56,7 +56,7 @@ const findAllItemReviews = (itemID, appID) => {
   };
 };
 
-const findReviewById = id => reviews.find(r.id === id);
+const findReviewById = id => reviews.find(r => r.id === id);
 
 const addReview = (currentUser, appID, itemID, rating, comment) => {
   if (!currentUser) {

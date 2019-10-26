@@ -1,5 +1,5 @@
 const { ApolloServer, gql } = require("apollo-server");
-const { countColors, findColors } = require("./lib");
+const { addColor, countColors, findColors, findColor } = require("./lib");
 
 const typeDefs = gql`
   scalar DateTime
@@ -30,7 +30,9 @@ const start = async () => {
     resolvers,
     context: ({ req }) => ({
       countColors,
-      findColors
+      findColors,
+      addColor,
+      findColor
     })
   });
 
