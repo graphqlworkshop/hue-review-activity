@@ -22,6 +22,16 @@ const typeDefs = gql`
     totalColors: Int!
     allColors: [Color!]!
   }
+
+  type Error {
+    message: String!
+  }
+
+  union ColorPayload = Error | Color
+
+  type Mutation {
+    addColor(title: String!, value: String!): ColorPayload!
+  }
 `;
 
 const resolvers = {
@@ -29,8 +39,22 @@ const resolvers = {
     totalColors: (_, __, { countColors }) => countColors(),
     allColors: (_, __, { findColors }) => findColors()
   },
+  Mutation: {
+    addColor(_, { title, value }, { currentUser, addColor }) {
+      if (!currentUser) {
+        return {
+          message: "You must be logged in to add a color"
+        };
+      }
+      const color = addColor(currentUser, title, value);
+      return color;
+    }
+  },
   User: {
     postedColors: ({ email }, _, { findColors }) => findColors(email)
+  },
+  ColorPayload: {
+    __resolveType: parent => (parent.message ? "Error" : "Color")
   }
 };
 
@@ -43,7 +67,8 @@ const start = async () => {
     context: ({ req }) => ({
       countColors,
       findColors,
-      addColor
+      addColor,
+      currentUser: req.headers["user-email"]
     })
   });
 
