@@ -20,7 +20,10 @@ const saveColors = async (newColors = colors) => {
 };
 
 const findColors = email =>
-  !email ? colors : colors.filter(c => c.email === email);
+  !email ? colors : colors.filter(c => c.createdBy.email === email);
+
+const findColor = id => colors.find(c => c.id === id);
+
 const countColors = () => colors.length;
 
 const addColor = (email, title, value) => {
@@ -30,11 +33,11 @@ const addColor = (email, title, value) => {
     value,
     created: new Date().toISOString(),
     createdBy: {
-      email: currentUser
+      email
     }
   };
   saveColors([...colors, newColor]);
   return newColor;
 };
 
-module.exports = { countColors, findColors, addColor };
+module.exports = { countColors, findColors, addColor, findColor };

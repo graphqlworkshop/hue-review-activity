@@ -1,4 +1,6 @@
 const { ApolloServer, gql } = require("apollo-server");
+const { buildFederatedSchema } = require("@apollo/federation");
+
 const {
   addAccount,
   findAllAccounts,
@@ -71,8 +73,10 @@ const resolvers = {
 
 const start = async () => {
   const server = new ApolloServer({
-    typeDefs,
-    resolvers,
+    schema: buildFederatedSchema({
+      typeDefs,
+      resolvers
+    }),
     mocks: true,
     mockEntireSchema: false,
     context({ req }) {
