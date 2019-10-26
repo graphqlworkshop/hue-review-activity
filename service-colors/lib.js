@@ -23,6 +23,8 @@ const findColors = email =>
   !email ? colors : colors.filter(c => c.createdBy.email === email);
 const countColors = () => colors.length;
 
+const findColor = id => colors.find(c => c.id === id);
+
 const addColor = (email, title, value) => {
   const newColor = {
     id: generate(),

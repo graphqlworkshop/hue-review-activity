@@ -1,5 +1,5 @@
 const { ApolloServer, gql } = require("apollo-server");
-const { addColor, countColors, findColors } = require("./lib");
+const { addColor, countColors, findColors, findColor } = require("./lib");
 const { buildFederatedSchema } = require("@apollo/federation");
 
 const typeDefs = gql`
@@ -11,11 +11,22 @@ const typeDefs = gql`
     value: String!
     created: DateTime!
     createdBy: User!
+    reviews: ReviewableItem!
   }
 
   extend type User @key(fields: "email") {
     email: ID! @external
     postedColors: [Color!]!
+  }
+
+  extend type ReviewableItem @key(fields: "itemID") {
+    itemID: ID! @external
+  }
+
+  extend type Review @key(fields: "id") {
+    id: ID! @external
+    itemID: ID! @external
+    color: Color! @requires(fields: "itemID")
   }
 
   type Query {
@@ -55,6 +66,12 @@ const resolvers = {
   },
   ColorPayload: {
     __resolveType: parent => (parent.message ? "Error" : "Color")
+  },
+  Color: {
+    reviews: ({ id }) => ({ itemID: id })
+  },
+  Review: {
+    color: ({ itemID }, args, { findColor }) => findColor(itemID)
   }
 };
 
@@ -67,6 +84,7 @@ const start = async () => {
     context: ({ req }) => ({
       countColors,
       findColors,
+      findColor,
       addColor,
       currentUser: req.headers["user-email"]
     })

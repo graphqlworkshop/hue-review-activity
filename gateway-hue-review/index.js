@@ -5,6 +5,7 @@ const fetch = require("node-fetch");
 const gateway = new ApolloGateway({
   serviceList: [
     { name: "users", url: "http://localhost:4000" },
+    { name: "reviews", url: "http://localhost:4001" },
     { name: "colors", url: "http://localhost:4002" }
   ],
   buildService({ url }) {
@@ -30,6 +31,7 @@ const gateway = new ApolloGateway({
             request.http.headers.set("user-email", data.me.email);
           }
           request.http.headers.set("authorization", context.authorization);
+          request.http.headers.set("app-id", "hue-review");
         }
       }
     });
