@@ -1,0 +1,27 @@
+{
+  "name": "sample-cloud",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "install": "(cd service-reviews; npm i;) & (cd service-colors; npm i;) & (cd service-accounts; npm i) & (cd gateway-hue-review; npm i;)",
+    "start": "pm2 start ./service-accounts/ --name \"service-accounts\" -i 1; pm2 start ./service-reviews/ --name \"service-reviews\" -i 1; pm2 start ./service-colors/ --name \"service-colors\" -i 1; pm2 start ./gateway-hue-review/ --name \"gateway-hue-review\" -i 1;",
+    "stop": "pm2 stop service-accounts; pm2 stop service-reviews; pm2 stop service-colors; pm2 stop gateway-hue-review",
+    "remove": "pm2 flush; pm2 delete service-accounts; pm2 delete service-reviews; pm2 delete service-colors; pm2 delete gateway-hue-review;",
+    "list": "pm2 list"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/graphqlworkshop/hue-review-activity.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/graphqlworkshop/hue-review-activity/issues"
+  },
+  "homepage": "https://github.com/graphqlworkshop/hue-review-activity#readme",
+  "devDependencies": {
+    "pm2": "^4.1.2"
+  }
+}

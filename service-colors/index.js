@@ -90,7 +90,7 @@ const start = async () => {
     })
   });
 
-  server.listen(process.env.PORT).then(({ url }) => {
+  server.listen(process.env.PORT || 4002).then(({ url }) => {
     console.log(`       🎨 🖍  - Color service running at: ${url}`);
   });
 };

@@ -45,7 +45,7 @@ const start = async () => {
     executor,
     context: ({ req }) => ({ authorization: req.headers.authorization })
   });
-  server.listen(process.env.PORT).then(({ url }) => {
+  server.listen(process.env.PORT || 4003).then(({ url }) => {
     console.log(
       `      🎨  🖍  👩‍💻  ✅   - The Hue Review Gateway API running at ${url}`
     );

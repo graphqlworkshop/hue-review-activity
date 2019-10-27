@@ -107,7 +107,7 @@ const start = async () => {
     }
   });
 
-  server.listen(process.env.PORT).then(({ url }) => {
+  server.listen(process.env.PORT || 4000).then(({ url }) => {
     console.log(`     👨‍👨‍👧‍👦   - Account service running at: ${url}`);
   });
 };
