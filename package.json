@@ -8,7 +8,9 @@
     "start": "pm2 start ./service-accounts/ --name \"service-accounts\" -i 1; pm2 start ./service-reviews/ --name \"service-reviews\" -i 1; pm2 start ./service-colors/ --name \"service-colors\" -i 1; pm2 start ./gateway-hue-review/ --name \"gateway-hue-review\" -i 1;",
     "stop": "pm2 stop service-accounts; pm2 stop service-reviews; pm2 stop service-colors; pm2 stop gateway-hue-review",
     "remove": "pm2 flush; pm2 delete service-accounts; pm2 delete service-reviews; pm2 delete service-colors; pm2 delete gateway-hue-review;",
-    "list": "pm2 list"
+    "restart": "pm2 restart service-accounts; pm2 restart service-reviews; pm2 restart service-colors; pm2 restart gateway-hue-review;",
+    "list": "pm2 list",
+    "logs": "pm2 logs"
   },
   "repository": {
     "type": "git",
