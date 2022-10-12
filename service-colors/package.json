@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@apollo/federation": "^0.10.2",
-    "apollo-server": "^2.9.6",
+    "apollo-server": "^2.25.4",
     "dotenv": "^8.2.0",
     "graphql": "^14.5.8",
     "shortid": "^2.2.15"
